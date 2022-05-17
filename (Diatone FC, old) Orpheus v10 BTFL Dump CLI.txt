@@ -249,7 +249,6 @@ feature TELEMETRY
 feature OSD
 feature AIRMODE
 feature ANTI_GRAVITY
-feature DYNAMIC_FILTER
 
 # beeper
 beeper -GYRO_CALIBRATED
@@ -401,12 +400,12 @@ aux 1 1 5 900 1200 0 0
 aux 2 2 5 1300 1700 0 0
 aux 3 27 1 1900 2100 1 0
 aux 4 27 2 1900 2100 1 0
-aux 5 13 4 1400 1600 0 0
-aux 6 19 7 1350 1700 0 0
-aux 7 35 4 1825 2100 0 0
-aux 8 36 3 1825 2100 0 0
-aux 9 39 7 1875 2100 0 0
-aux 10 0 0 900 900 0 0
+aux 5 46 2 1900 2100 0 0
+aux 6 13 4 1400 1600 0 0
+aux 7 19 7 1350 1700 0 0
+aux 8 35 4 1825 2100 0 0
+aux 9 36 3 1825 2100 0 0
+aux 10 39 7 1875 2100 0 0
 aux 11 0 0 900 900 0 0
 aux 12 0 0 900 900 0 0
 aux 13 0 0 900 900 0 0
@@ -504,7 +503,7 @@ set gyro_hardware_lpf = NORMAL
 set gyro_lowpass_type = PT1
 set gyro_lowpass_hz = 200
 set gyro_lowpass2_type = PT1
-set gyro_lowpass2_hz = 180
+set gyro_lowpass2_hz = 250
 set gyro_notch1_hz = 0
 set gyro_notch1_cutoff = 0
 set gyro_notch2_hz = 0
@@ -520,14 +519,14 @@ set dyn_notch_width_percent = 3
 set dyn_notch_q = 150
 set dyn_notch_min_hz = 60
 set dyn_notch_max_hz = 350
-set dyn_lpf_gyro_min_hz = 80
-set dyn_lpf_gyro_max_hz = 350
+set dyn_lpf_gyro_min_hz = 180
+set dyn_lpf_gyro_max_hz = 280
 set gyro_filter_debug_axis = ROLL
 set acc_hardware = AUTO
 set acc_lpf_hz = 10
 set acc_trim_pitch = 0
 set acc_trim_roll = 0
-set acc_calibration = -157,32,-39,1
+set acc_calibration = 12,-4,31,1
 set align_mag = DEFAULT
 set mag_align_roll = 0
 set mag_align_pitch = 0
@@ -638,10 +637,10 @@ set vbat_sag_lpf_period = 2
 set ibat_lpf_period = 10
 set vbat_duration_for_warning = 0
 set vbat_duration_for_critical = 0
-set vbat_scale = 110
+set vbat_scale = 111
 set vbat_divider = 10
 set vbat_multiplier = 1
-set ibata_scale = 183
+set ibata_scale = 85
 set ibata_offset = 0
 set ibatv_scale = 0
 set ibatv_offset = 0
@@ -701,7 +700,7 @@ set gps_rescue_throttle_hover = 1270
 set gps_rescue_sanity_checks = RESCUE_SANITY_FS_ONLY
 set gps_rescue_min_sats = 5
 set gps_rescue_min_dth = 75
-set gps_rescue_allow_arming_without_fix = OFF
+set gps_rescue_allow_arming_without_fix = ON
 set gps_rescue_alt_mode = MAX_ALT
 set gps_rescue_use_mag = ON
 set deadband = 0
@@ -814,7 +813,7 @@ set osd_ah_pos = 110
 set osd_current_pos = 6561
 set osd_mah_drawn_pos = 6594
 set osd_motor_diag_pos = 129
-set osd_craft_name_pos = 42
+set osd_craft_name_pos = 203
 set osd_display_name_pos = 234
 set osd_gps_speed_pos = 6569
 set osd_gps_lon_pos = 4192
@@ -1011,7 +1010,7 @@ set vbat_sag_compensation = 0
 set pid_at_min_throttle = ON
 set anti_gravity_mode = SMOOTH
 set anti_gravity_threshold = 250
-set anti_gravity_gain = 4000
+set anti_gravity_gain = 5000
 set feedforward_transition = 0
 set acc_limit_yaw = 0
 set acc_limit = 0
@@ -1039,16 +1038,16 @@ set acro_trainer_angle_limit = 20
 set acro_trainer_lookahead_ms = 50
 set acro_trainer_debug_axis = ROLL
 set acro_trainer_gain = 75
-set p_pitch = 99
+set p_pitch = 69
 set i_pitch = 18
-set d_pitch = 70
+set d_pitch = 55
 set f_pitch = 32
-set p_roll = 91
+set p_roll = 60
 set i_roll = 18
-set d_roll = 64
+set d_roll = 50
 set f_roll = 31
 set p_yaw = 97
-set i_yaw = 18
+set i_yaw = 30
 set d_yaw = 0
 set f_yaw = 31
 set angle_level_strength = 50
@@ -1091,7 +1090,7 @@ profile 1
 
 # profile 1
 set profile_name = -
-set dyn_lpf_dterm_min_hz = 70
+set dyn_lpf_dterm_min_hz = 55
 set dyn_lpf_dterm_max_hz = 170
 set dyn_lpf_dterm_curve_expo = 5
 set dterm_lowpass_type = PT1
@@ -1105,7 +1104,7 @@ set vbat_sag_compensation = 0
 set pid_at_min_throttle = ON
 set anti_gravity_mode = SMOOTH
 set anti_gravity_threshold = 250
-set anti_gravity_gain = 4200
+set anti_gravity_gain = 4000
 set feedforward_transition = 0
 set acc_limit_yaw = 0
 set acc_limit = 0
@@ -1121,11 +1120,11 @@ set crash_recovery = OFF
 set iterm_rotation = OFF
 set iterm_relax = RP
 set iterm_relax_type = SETPOINT
-set iterm_relax_cutoff = 15
+set iterm_relax_cutoff = 6
 set iterm_windup = 100
 set iterm_limit = 400
-set pidsum_limit = 500
-set pidsum_limit_yaw = 400
+set pidsum_limit = 1000
+set pidsum_limit_yaw = 1000
 set yaw_lowpass_hz = 0
 set throttle_boost = 5
 set throttle_boost_cutoff = 15
@@ -1133,18 +1132,18 @@ set acro_trainer_angle_limit = 20
 set acro_trainer_lookahead_ms = 50
 set acro_trainer_debug_axis = ROLL
 set acro_trainer_gain = 75
-set p_pitch = 84
-set i_pitch = 10
-set d_pitch = 18
-set f_pitch = 45
-set p_roll = 72
-set i_roll = 12
-set d_roll = 15
-set f_roll = 40
-set p_yaw = 51
-set i_yaw = 12
-set d_yaw = 5
-set f_yaw = 40
+set p_pitch = 69
+set i_pitch = 18
+set d_pitch = 45
+set f_pitch = 32
+set p_roll = 60
+set i_roll = 18
+set d_roll = 40
+set f_roll = 31
+set p_yaw = 97
+set i_yaw = 30
+set d_yaw = 0
+set f_yaw = 31
 set angle_level_strength = 50
 set horizon_level_strength = 50
 set horizon_transition = 75
@@ -1162,7 +1161,7 @@ set d_min_pitch = 0
 set d_min_yaw = 0
 set d_min_boost_gain = 37
 set d_min_advance = 20
-set motor_output_limit = 100
+set motor_output_limit = 75
 set auto_profile_cell_count = 0
 set launch_control_mode = NORMAL
 set launch_trigger_allow_reset = ON
@@ -1215,7 +1214,7 @@ set crash_recovery = OFF
 set iterm_rotation = OFF
 set iterm_relax = RP
 set iterm_relax_type = SETPOINT
-set iterm_relax_cutoff = 15
+set iterm_relax_cutoff = 5
 set iterm_windup = 100
 set iterm_limit = 400
 set pidsum_limit = 500
@@ -1227,18 +1226,18 @@ set acro_trainer_angle_limit = 20
 set acro_trainer_lookahead_ms = 50
 set acro_trainer_debug_axis = ROLL
 set acro_trainer_gain = 75
-set p_pitch = 46
+set p_pitch = 55
 set i_pitch = 90
-set d_pitch = 38
-set f_pitch = 95
-set p_roll = 42
+set d_pitch = 78
+set f_pitch = 171
+set p_roll = 50
 set i_roll = 85
-set d_roll = 35
-set f_roll = 90
-set p_yaw = 45
+set d_roll = 71
+set f_roll = 162
+set p_yaw = 54
 set i_yaw = 90
 set d_yaw = 0
-set f_yaw = 90
+set f_yaw = 162
 set angle_level_strength = 50
 set horizon_level_strength = 50
 set horizon_transition = 75
@@ -1251,8 +1250,8 @@ set abs_control_error_limit = 20
 set abs_control_cutoff = 11
 set use_integrated_yaw = OFF
 set integrated_yaw_relax = 200
-set d_min_roll = 23
-set d_min_pitch = 25
+set d_min_roll = 0
+set d_min_pitch = 0
 set d_min_yaw = 0
 set d_min_boost_gain = 37
 set d_min_advance = 20
