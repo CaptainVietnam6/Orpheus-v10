@@ -162,6 +162,7 @@ feature -DYNAMIC_FILTER
 feature -LEGACY_SA_SUPPORT
 feature RX_SERIAL
 feature GPS
+feature TELEMETRY
 feature OSD
 feature AIRMODE
 feature DYNAMIC_FILTER
@@ -202,8 +203,8 @@ map TAER1234
 serial 20 1 115200 57600 0 115200
 serial 0 2048 115200 57600 0 115200
 serial 1 0 115200 57600 0 115200
-serial 2 2 115200 115200 0 115200
-serial 3 1 115200 57600 0 115200
+serial 2 0 115200 57600 0 115200
+serial 3 2 115200 115200 0 115200
 serial 4 0 115200 57600 0 115200
 serial 5 64 115200 57600 0 115200
 
@@ -310,12 +311,12 @@ mode_color 6 10 0
 mode_color 7 0 3
 
 # aux
-aux 0 0 0 1825 2100 0 0
+aux 0 0 0 1900 2100 0 0
 aux 1 1 5 900 1100 0 0
 aux 2 2 5 1400 1600 0 0
 aux 3 46 2 1900 2100 0 0
-aux 4 13 4 1300 1700 0 0
-aux 5 19 7 1300 1700 0 0
+aux 4 13 4 1400 1600 0 0
+aux 5 19 7 1400 1600 0 0
 aux 6 35 4 1900 2100 0 0
 aux 7 36 3 1900 2100 0 0
 aux 8 39 7 1900 2100 0 0
@@ -371,14 +372,14 @@ rxfail 0 a
 rxfail 1 a
 rxfail 2 a
 rxfail 3 a
-rxfail 4 h
+rxfail 4 s 2000
 rxfail 5 h
-rxfail 6 h
-rxfail 7 h
-rxfail 8 h
-rxfail 9 h
+rxfail 6 s 2000
+rxfail 7 s 2000
+rxfail 8 s 1500
+rxfail 9 s 1000
 rxfail 10 h
-rxfail 11 h
+rxfail 11 s 1000
 rxfail 12 h
 rxfail 13 h
 rxfail 14 h
@@ -394,7 +395,7 @@ set gyro_sync_denom = 1
 set gyro_lowpass_type = PT1
 set gyro_lowpass_hz_roll = 75
 set gyro_lowpass_hz_pitch = 75
-set gyro_lowpass_hz_yaw = 85
+set gyro_lowpass_hz_yaw = 75
 set gyro_lowpass2_type = PT1
 set gyro_lowpass2_hz_roll = 0
 set gyro_lowpass2_hz_pitch = 0
@@ -409,19 +410,19 @@ set gyro_notch2_cutoff = 0
 set gyro_calib_duration = 125
 set gyro_calib_noise_limit = 48
 set gyro_offset_yaw = 0
-set imuf_roll_q = 6000
-set imuf_pitch_q = 6000
-set imuf_yaw_q = 6000
-set imuf_w = 32
+set imuf_roll_q = 5000
+set imuf_pitch_q = 5000
+set imuf_yaw_q = 5000
+set imuf_w = 128
 set gyro_overflow_detect = ALL
 set yaw_spin_recovery = ON
 set yaw_spin_threshold = 1950
 set gyro_use_32khz = OFF
 set gyro_to_use = FIRST
-set dynamic_gyro_notch_q = 150
+set dynamic_gyro_notch_q = 250
 set dynamic_gyro_notch_count = 3
-set dynamic_gyro_notch_min_hz = 85
-set dynamic_gyro_notch_max_hz = 400
+set dynamic_gyro_notch_min_hz = 170
+set dynamic_gyro_notch_max_hz = 600
 set smith_predict_enabled = ON
 set smith_predict_str = 50
 set smith_predict_delay = 40
@@ -431,7 +432,7 @@ set acc_hardware = AUTO
 set acc_lpf_hz = 40
 set acc_trim_pitch = 0
 set acc_trim_roll = 0
-set acc_calibration = 171,-18,-146
+set acc_calibration = 2,-27,-152
 set align_mag = DEFAULT
 set mag_bustype = I2C
 set mag_i2c_device = 1
@@ -486,21 +487,21 @@ set blackbox_mode = NORMAL
 set min_throttle = 1070
 set max_throttle = 2000
 set min_command = 1000
-set dshot_idle_value = 750
+set dshot_idle_value = 650
 set dshot_burst = ON
 set use_unsynced_pwm = OFF
-set motor_pwm_protocol = DSHOT600
+set motor_pwm_protocol = DSHOT1200
 set motor_pwm_rate = 480
 set motor_pwm_inversion = OFF
 set motor_poles = 14
 set thr_corr_value = 0
 set thr_corr_angle = 800
-set failsafe_delay = 4
-set failsafe_off_delay = 10
-set failsafe_throttle = 1000
+set failsafe_delay = 10
+set failsafe_off_delay = 30
+set failsafe_throttle = 1150
 set failsafe_switch_mode = STAGE1
 set failsafe_throttle_low_delay = 100
-set failsafe_procedure = DROP
+set failsafe_procedure = GPS-RESCUE
 set align_board_roll = 0
 set align_board_pitch = 0
 set align_board_yaw = 0
@@ -560,13 +561,13 @@ set gyro_cal_on_first_arm = OFF
 set use_stick_arming = OFF
 set gps_provider = UBLOX
 set gps_sbas_mode = AUTO
-set gps_auto_config = OFF
-set gps_auto_baud = ON
+set gps_auto_config = ON
+set gps_auto_baud = OFF
 set gps_ublox_use_galileo = OFF
-set gps_rescue_angle = 32
+set gps_rescue_angle = 35
 set gps_rescue_initial_alt = 50
-set gps_rescue_descent_dist = 200
-set gps_rescue_ground_speed = 2000
+set gps_rescue_descent_dist = 150
+set gps_rescue_ground_speed = 2500
 set gps_rescue_throttle_p = 150
 set gps_rescue_throttle_i = 20
 set gps_rescue_throttle_d = 50
@@ -574,11 +575,11 @@ set gps_rescue_velocity_p = 80
 set gps_rescue_velocity_i = 20
 set gps_rescue_velocity_d = 15
 set gps_rescue_yaw_p = 40
-set gps_rescue_throttle_min = 1200
+set gps_rescue_throttle_min = 1125
 set gps_rescue_throttle_max = 1600
-set gps_rescue_throttle_hover = 1280
+set gps_rescue_throttle_hover = 1180
 set gps_rescue_sanity_checks = RESCUE_SANITY_FS_ONLY
-set gps_rescue_min_sats = 0
+set gps_rescue_min_sats = 5
 set deadband = 0
 set yaw_deadband = 0
 set yaw_control_reversed = OFF
@@ -636,7 +637,7 @@ set osd_crsf_snr_pos = 363
 set osd_crsf_rssi_pos = 2440
 set osd_tim_1_pos = 234
 set osd_tim_2_pos = 2518
-set osd_remaining_time_estimate_pos = 234
+set osd_remaining_time_estimate_pos = 2487
 set osd_flymode_pos = 65
 set osd_g_force_pos = 2512
 set osd_throttle_pos = 97
@@ -679,27 +680,27 @@ set osd_adjustment_range_pos = 234
 set osd_mah_percent_pos = 234
 set osd_core_temp_pos = 234
 set osd_stat_rtc_date_time = OFF
-set osd_stat_tim_1 = OFF
+set osd_stat_tim_1 = ON
 set osd_stat_tim_2 = ON
 set osd_stat_max_spd = ON
 set osd_stat_max_dist = ON
 set osd_stat_min_batt = ON
 set osd_stat_endbatt = OFF
 set osd_stat_battery = OFF
-set osd_stat_min_rssi = OFF
+set osd_stat_min_rssi = ON
 set osd_stat_max_curr = ON
 set osd_stat_used_mah = ON
 set osd_stat_max_alt = ON
 set osd_stat_bbox = OFF
 set osd_stat_bb_no = OFF
 set task_statistics = ON
-set debug_mode = NONE
+set debug_mode = GYRO_SCALED
 set rate_6pos_switch = OFF
 set cpu_overclock = OFF
 set pwr_on_arm_grace = 5
 set vtx_band = 1
 set vtx_channel = 1
-set vtx_power = 1
+set vtx_power = 4
 set vtx_low_power_disarm = OFF
 set vtx_freq = 5865
 set vtx_pit_mode_freq = 0
@@ -741,11 +742,11 @@ set dterm_dyn_notch_q = 400
 set dterm_abg_alpha = 0
 set dterm_abg_boost = 275
 set dterm_abg_half_life = 50
-set dterm_lowpass_type = BIQUAD
+set dterm_lowpass_type = PT2
 set dterm_lowpass_hz_roll = 75
 set dterm_lowpass_hz_pitch = 75
 set dterm_lowpass_hz_yaw = 75
-set dterm_lowpass2_type = PT1
+set dterm_lowpass2_type = BIQUAD
 set dterm_lowpass2_hz_roll = 0
 set dterm_lowpass2_hz_pitch = 0
 set dterm_lowpass2_hz_yaw = 0
@@ -784,25 +785,25 @@ set throttle_boost_cutoff = 15
 set feathered_pids = 100
 set i_decay = 4
 set i_decay_cutoff = 200
-set emu_boost = 15
+set emu_boost = 30
 set emu_boost_yaw = 40
-set emu_boost_limit = 20
+set emu_boost_limit = 35
 set emu_boost_limit_yaw = 40
 set dterm_boost = 0
 set dterm_boost_limit = 0
 set emu_gravity = 50
 set axis_lock_multiplier = 0
 set axis_lock_hz = 2
-set p_pitch = 50
-set i_pitch = 10
-set d_pitch = 45
-set p_roll = 40
-set i_roll = 10
-set d_roll = 45
+set p_pitch = 55
+set i_pitch = 30
+set d_pitch = 55
+set p_roll = 46
+set i_roll = 45
+set d_roll = 55
 set p_yaw = 32
-set i_yaw = 15
+set i_yaw = 50
 set d_yaw = 5
-set df_yaw = 15
+set df_yaw = 40
 set p_angle_low = 100
 set d_angle_low = 10
 set p_angle_high = 35
@@ -818,29 +819,29 @@ set horizon_tilt_effect = 50
 set horizon_strength = 50
 set motor_output_limit = 100
 set auto_profile_cell_count = 0
-set linear_thrust_low_output = 65
+set linear_thrust_low_output = 0
 set linear_thrust_high_output = 0
 set linear_throttle = OFF
 set mixer_impl = 2PASS
-set mixer_laziness = OFF
+set mixer_laziness = ON
 set mixer_yaw_throttle_comp = ON
 
 # profile
 profile 1
 
-set dterm_dyn_notch_enable = OFF
+set dterm_dyn_notch_enable = ON
 set dterm_dyn_notch_q = 400
 set dterm_abg_alpha = 0
 set dterm_abg_boost = 275
 set dterm_abg_half_life = 50
-set dterm_lowpass_type = PT1
-set dterm_lowpass_hz_roll = 90
-set dterm_lowpass_hz_pitch = 90
-set dterm_lowpass_hz_yaw = 90
-set dterm_lowpass2_type = PT1
-set dterm_lowpass2_hz_roll = 200
-set dterm_lowpass2_hz_pitch = 200
-set dterm_lowpass2_hz_yaw = 200
+set dterm_lowpass_type = PT2
+set dterm_lowpass_hz_roll = 75
+set dterm_lowpass_hz_pitch = 75
+set dterm_lowpass_hz_yaw = 75
+set dterm_lowpass2_type = BIQUAD
+set dterm_lowpass2_hz_roll = 0
+set dterm_lowpass2_hz_pitch = 0
+set dterm_lowpass2_hz_yaw = 0
 set pid_at_min_throttle = ON
 set spa_roll_p = 110
 set spa_roll_i = 85
@@ -876,25 +877,25 @@ set throttle_boost_cutoff = 15
 set feathered_pids = 100
 set i_decay = 4
 set i_decay_cutoff = 200
-set emu_boost = 15
+set emu_boost = 30
 set emu_boost_yaw = 40
-set emu_boost_limit = 20
+set emu_boost_limit = 35
 set emu_boost_limit_yaw = 40
 set dterm_boost = 0
 set dterm_boost_limit = 0
 set emu_gravity = 50
 set axis_lock_multiplier = 0
 set axis_lock_hz = 2
-set p_pitch = 58
-set i_pitch = 70
-set d_pitch = 30
-set p_roll = 50
-set i_roll = 70
-set d_roll = 28
-set p_yaw = 60
-set i_yaw = 70
+set p_pitch = 55
+set i_pitch = 30
+set d_pitch = 55
+set p_roll = 46
+set i_roll = 30
+set d_roll = 55
+set p_yaw = 32
+set i_yaw = 50
 set d_yaw = 5
-set df_yaw = 15
+set df_yaw = 40
 set p_angle_low = 100
 set d_angle_low = 10
 set p_angle_high = 35
@@ -906,7 +907,7 @@ set level_limit = 45
 set angle_expo = 10
 set angle_filter = 100
 set horizon_transition = 0
-set horizon_tilt_effect = 90
+set horizon_tilt_effect = 50
 set horizon_strength = 50
 set motor_output_limit = 100
 set auto_profile_cell_count = 0
@@ -914,7 +915,7 @@ set linear_thrust_low_output = 65
 set linear_thrust_high_output = 0
 set linear_throttle = OFF
 set mixer_impl = 2PASS
-set mixer_laziness = OFF
+set mixer_laziness = ON
 set mixer_yaw_throttle_comp = ON
 
 # profile
@@ -1018,15 +1019,15 @@ rateprofile 0
 set thr_mid = 50
 set thr_expo = 0
 set rates_type = BETAFLIGHT
-set roll_rc_rate = 115
-set pitch_rc_rate = 115
+set roll_rc_rate = 121
+set pitch_rc_rate = 121
 set yaw_rc_rate = 100
 set roll_expo = 25
 set pitch_expo = 25
 set yaw_expo = 25
-set roll_srate = 72
-set pitch_srate = 72
-set yaw_srate = 72
+set roll_srate = 75
+set pitch_srate = 75
+set yaw_srate = 75
 set das_yaw_with_roll_input = 0
 set das_roll_with_yaw_input = 0
 set roll_pitch_mag_expo = 0
